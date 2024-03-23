@@ -50,6 +50,8 @@ void GameState::Update(const float deltaTime)
 
 void GameState::Render()
 {
+    SimpleDraw::AddGroundPlane(10, Colors::Aqua);
+    SimpleDraw::Render(mCamera);
     if (mUseTransparency)
     {
         mTransparencyEffect.Begin();
