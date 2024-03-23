@@ -6,6 +6,7 @@
 #include "PixelShader.h"
 #include "Sampler.h"
 #include "VertexShader.h"
+#include "BlendState.h"
 
 namespace SpringEngine::Graphics
 {
@@ -54,6 +55,7 @@ namespace SpringEngine::Graphics
         TransformBuffer mTransformBuffer;
         SettingsBuffer mSettingsBuffer;
         Sampler mSampler;
+        BlendState mBlendState;
 
         const Camera* mCamera = nullptr;
     };

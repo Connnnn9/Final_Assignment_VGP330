@@ -16,6 +16,7 @@ void TransparencyEffect::Initialize(const std::filesystem::path& filePath)
     mPixelShader.Initialize(filePath);
     mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
     mSettingsBuffer.Initialize();
+    mBlendState.Initialize(BlendState::Mode::AlphaBlend);
 }
 
 void TransparencyEffect::Terminate()
@@ -24,6 +25,8 @@ void TransparencyEffect::Terminate()
     mPixelShader.Terminate();
     mVertexShader.Terminate();
     mTransformBuffer.Terminate();
+    mSettingsBuffer.Terminate();
+    mBlendState.Terminate();
 }
 
 void TransparencyEffect::Begin()
@@ -31,10 +34,12 @@ void TransparencyEffect::Begin()
     mVertexShader.Bind();
     mPixelShader.Bind();
     mSampler.BindPS(0);
+    mBlendState.Set();
 }
 
 void TransparencyEffect::End()
 {
+    BlendState::ClearState();
 }
 
 void TransparencyEffect::Render(const RenderObject& renderObject)
@@ -49,7 +54,9 @@ void TransparencyEffect::Render(const RenderObject& renderObject)
     data.ViewPosition = mCamera->GetPosition();
 
     mTransformBuffer.Update(data);
-    mTransformBuffer.BindVS(0);
+
+    mSettingsBuffer.BindPS(0);
+    mTransformBuffer.BindVS(1);
 
     auto tm = TextureManager::Get();
     if (renderObject.diffuseMapId > 0) tm->BindPS(renderObject.diffuseMapId, 0);
@@ -68,7 +75,6 @@ void TransparencyEffect::SetTransparencyValue(float value)
     SettingsData settingsData;
     settingsData.transparency = value;
     mSettingsBuffer.Update(settingsData);
-    mSettingsBuffer.BindPS(0); 
 }
 
 void TransparencyEffect::DebugUI()

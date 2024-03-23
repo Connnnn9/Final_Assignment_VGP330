@@ -27,17 +27,6 @@ struct VS_OUTPUT
 };
 
 
-//struct PS_INTPUT
-//{
-//    float4 position : POSITION; 
-//    float2 texCoord : TEXCOORD0; 
-//};
-//
-//struct PS_OUTPUT
-//{
-//    float4 color : TARGET;
-//};
-
 VS_OUTPUT VS(VS_INPUT input)
 {
     VS_INPUT output;
@@ -46,13 +35,10 @@ VS_OUTPUT VS(VS_INPUT input)
     return output;
 }
 
-float4 PS(VS_INPUT input) : SV_Target
+float4 PS(VS_OUTPUT input) : SV_Target
 {
-    VS_OUTPUT output;
     float4 color = ObjTexture.Sample(ObjSampler, input.texCoord);
     color.a  *= transparencyValue;
-    //output.color = ObjTexture.Sample(ObjSampler, input.texCoord);
-    //output.color.a *= transparencyValue;
     return color;
 }
 
