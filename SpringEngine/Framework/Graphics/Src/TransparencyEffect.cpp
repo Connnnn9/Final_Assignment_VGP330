@@ -12,11 +12,10 @@ using namespace SpringEngine::Graphics;
 void TransparencyEffect::Initialize(const std::filesystem::path& filePath)
 {
     mTransformBuffer.Initialize();
-
     mVertexShader.Initialize<Vertex>(filePath);
     mPixelShader.Initialize(filePath);
-
     mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
+    mSettingsBuffer.Initialize();
 }
 
 void TransparencyEffect::Terminate()
@@ -47,11 +46,9 @@ void TransparencyEffect::Render(const RenderObject& renderObject)
     TransformData data;
     data.wvp = Transpose(matWorld * matView * matProj);
     data.world = Transpose(matWorld);
-   
     data.ViewPosition = mCamera->GetPosition();
 
     mTransformBuffer.Update(data);
-
     mTransformBuffer.BindVS(0);
 
     auto tm = TextureManager::Get();

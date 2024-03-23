@@ -32,7 +32,7 @@ void ConstantBuffer::Terminate()
 
 void ConstantBuffer::Update(const void* data) const
 {
-	auto context = GraphicsSystem::Get()->GetContext();
+ 	auto context = GraphicsSystem::Get()->GetContext();
 	context->UpdateSubresource(mConstantBuffer, 0, nullptr, data, 0, 0);
 }
 

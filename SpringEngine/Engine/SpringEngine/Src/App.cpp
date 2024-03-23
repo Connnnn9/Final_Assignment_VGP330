@@ -34,8 +34,7 @@ void App::Run(const AppConfig& config)
 	TextureManager::StaticInitialize("../../Assets/Textures/");
 	ModelManager::StaticInitialize();
 
-	ASSERT(mCurrentState, "App -- no app state found");
-	mCurrentState->Initialize();
+	ASSERT(mCurrentState, "App -- no app state found");	mCurrentState->Initialize();
 	mRunning = true;
 	while (mRunning)
 	{
